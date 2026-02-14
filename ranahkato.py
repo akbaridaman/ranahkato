@@ -27,7 +27,7 @@ st.write(data.keys())  # Menampilkan semua sheet yang ada dalam file
 cleaned_data = {}
 for sheet_name, sheet_data in data.items():
     st.write(f"Memproses data dari sheet: {sheet_name}")  # Menampilkan nama sheet yang sedang diproses
-    if 'Bentuk Kosakata' in sheet_data.columns and 'Transkripsi Fonemis' in sheet_data.columns and 'Kata' in sheet_data.columns:
+    if 'Bentuk Kosakata' in sheet_data.columns and 'Kata' in sheet_data.columns:
         cleaned_data[sheet_name] = sheet_data[['Bentuk Kosakata', 'Transkripsi Fonemis', 'Kata']].dropna()
     else:
         st.warning(f"Sheet '{sheet_name}' tidak memiliki kolom yang diperlukan.")
@@ -56,3 +56,4 @@ if user_input:
         for sheet_name, matched_words in all_matches.items():
             st.write(f"Kosakata yang cocok pada tabel '{sheet_name}':")
             st.write(matched_words)
+
