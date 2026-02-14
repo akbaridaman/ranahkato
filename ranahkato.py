@@ -2,22 +2,32 @@ import pandas as pd
 from fuzzywuzzy import fuzz
 import streamlit as st
 
-# 1. Memuat Data Kosakata
-file_path = "https://raw.githubusercontent.com/akbaridaman/ranahkato/main/ranahkato.xlsx"
-data = pd.read_excel(file_path)
+# 1. Memuat Data Kosakata dari URL Raw GitHub
+file_url = "https://raw.githubusercontent.com/akbaridaman/ranahkato/main/ranahkato.xlsx"
+try:
+    data = pd.read_excel(file_url)
+except Exception as e:
+    st.error(f"Terjadi kesalahan saat memuat file: {e}")
+    st.stop()
 
-# 2. Memilih Kolom yang Relevan dan Membersihkan Data
-cleaned_data = data[['Bentuk Kosakata', 'Transkripsi Fonemis', 'Kata']].dropna()
+# 2. Memeriksa kolom yang ada di dalam file
+st.write("Kolom yang ada dalam data:")
+st.write(data.columns)
 
-# 3. Fungsi untuk Mencocokkan String dengan Ketepatan yang Mendekati
+# 3. Memilih Kolom yang Relevan dan Membersihkan Data
+if 'Bentuk Kosakata' in data.columns and 'Transkripsi Fonemis' in data.columns and 'Kata' in data.columns:
+    cleaned_data = data[['Bentuk Kosakata', 'Transkripsi Fonemis', 'Kata']].dropna()
+else:
+    st.error("Kolom yang diperlukan tidak ditemukan dalam data.")
+    st.stop()
+
+# 4. Fungsi untuk Mencocokkan String dengan Ketepatan yang Mendekati (menggunakan partial_ratio untuk case-insensitive)
 def match_strings(str1, str2):
-    # Mengubah kedua string menjadi huruf kecil
     str1 = str1.lower()
     str2 = str2.lower()
-    return fuzz.ratio(str1, str2)
+    return fuzz.partial_ratio(str1, str2)
 
-# 4. Menggunakan Streamlit untuk Input dan Menampilkan Hasil
-# Judul aplikasi
+# 5. Menggunakan Streamlit untuk Input dan Menampilkan Hasil
 st.title("Aplikasi Pencarian Kosakata Minangkabau")
 
 # Input dari pengguna
@@ -34,6 +44,3 @@ if user_input:
     else:
         st.write("Kosakata yang cocok dengan input:")
         st.write(matched_words)
-
-
-
