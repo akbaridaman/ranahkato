@@ -11,12 +11,6 @@ def match_strings(str1, str2):
 # URL file Excel yang sudah dihosting di GitHub
 file_url = "https://raw.githubusercontent.com/akbaridaman/ranahkato/main/ranahkato.xlsx"
 
-
-
-# 2. Menampilkan nama sheet dalam file
-st.write("Sheet yang ada dalam file:")
-st.write(data.keys())  # Menampilkan semua sheet yang ada dalam file
-
 # 3. Menyiapkan Data dari Setiap Sheet
 cleaned_data = {}
 for sheet_name, sheet_data in data.items():
@@ -50,5 +44,6 @@ if user_input:
         for sheet_name, matched_words in all_matches.items():
             st.write(f"Kosakata yang cocok pada tabel '{sheet_name}':")
             st.write(matched_words)
+
 
 
