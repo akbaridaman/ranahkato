@@ -3,21 +3,15 @@ from rapidfuzz import fuzz
 import streamlit as st
 
 # Fungsi untuk mencocokkan string dengan ketepatan yang mendekati (case-insensitive)
-def match_strings(str1, str3):
+def match_strings(str1, str2):
     str1 = str1.strip().lower()  # Menghilangkan spasi dan mengubah menjadi huruf kecil
-    str3 = str3.strip().lower()
-    return fuzz.partial_ratio(str1, str3)
+    str2 = str2.strip().lower()
+    return fuzz.partial_ratio(str1, str2)
 
 # URL file Excel yang sudah dihosting di GitHub
 file_url = "https://raw.githubusercontent.com/akbaridaman/ranahkato/main/ranahkato.xlsx"
 
-# Membaca file Excel dari URL
-try:
-    data = pd.read_excel(file_url, sheet_name=None)  # Membaca semua sheet dalam file
-    st.write("Berhasil memuat file Excel dari URL.")
-except Exception as e:
-    st.error(f"Terjadi kesalahan saat memuat file: {e}")
-    st.stop()
+
 
 # 2. Menampilkan nama sheet dalam file
 st.write("Sheet yang ada dalam file:")
@@ -56,4 +50,5 @@ if user_input:
         for sheet_name, matched_words in all_matches.items():
             st.write(f"Kosakata yang cocok pada tabel '{sheet_name}':")
             st.write(matched_words)
+
 
