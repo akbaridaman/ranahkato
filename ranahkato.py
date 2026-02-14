@@ -11,6 +11,18 @@ def match_strings(str1, str2):
 # URL file Excel yang sudah dihosting di GitHub
 file_url = "https://raw.githubusercontent.com/akbaridaman/ranahkato/main/ranahkato.xlsx"
 
+# Membaca file Excel dari URL
+try:
+    data = pd.read_excel(file_url, sheet_name=None)  # Membaca semua sheet dalam file
+    st.write("Berhasil memuat file Excel dari URL.")
+except Exception as e:
+    st.error(f"Terjadi kesalahan saat memuat file: {e}")
+    st.stop()
+
+# 2. Menampilkan nama sheet dalam file
+st.write("Sheet yang ada dalam file:")
+st.write(data.keys())  # Menampilkan semua sheet yang ada dalam file
+
 # 3. Menyiapkan Data dari Setiap Sheet
 cleaned_data = {}
 for sheet_name, sheet_data in data.items():
@@ -44,6 +56,3 @@ if user_input:
         for sheet_name, matched_words in all_matches.items():
             st.write(f"Kosakata yang cocok pada tabel '{sheet_name}':")
             st.write(matched_words)
-
-
-
