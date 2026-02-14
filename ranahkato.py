@@ -3,7 +3,7 @@ from rapidfuzz import fuzz
 import streamlit as st
 
 # 1. Memuat Data Kosakata dari URL Raw GitHub
-file_url = "https://raw.githubusercontent.com/akbaridaman/ranahkato/main/ranahkato1.xlsx"
+file_url = "https://raw.githubusercontent.com/akbaridaman/ranahkato/main/ranahkato.xlsx"
 try:
     data = pd.read_excel(file_url)
 except Exception as e:
@@ -45,4 +45,5 @@ if user_input:
     else:
         st.write("Kosakata yang cocok dengan input:")
         st.write(matched_words)
+
 
