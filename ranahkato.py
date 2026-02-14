@@ -11,6 +11,9 @@ cleaned_data = data[['Bentuk Kosakata', 'Transkripsi Fonemis', 'Kata']].dropna()
 
 # 3. Fungsi untuk Mencocokkan String dengan Ketepatan yang Mendekati
 def match_strings(str1, str2):
+    # Mengubah kedua string menjadi huruf kecil
+    str1 = str1.lower()
+    str2 = str2.lower()
     return fuzz.ratio(str1, str2)
 
 # 4. Menggunakan Streamlit untuk Input dan Menampilkan Hasil
@@ -31,5 +34,6 @@ if user_input:
     else:
         st.write("Kosakata yang cocok dengan input:")
         st.write(matched_words)
+
 
 
