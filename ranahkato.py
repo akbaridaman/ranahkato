@@ -23,8 +23,9 @@ else:
 
 # 4. Fungsi untuk Mencocokkan String dengan Ketepatan yang Mendekati (menggunakan partial_ratio untuk case-insensitive)
 def match_strings(str1, str2):
-    str1 = str1.lower()
-    str2 = str2.lower()
+    # Mengubah kedua string menjadi huruf kecil dan menghapus spasi ekstra
+    str1 = str1.strip().lower()
+    str2 = str2.strip().lower()
     return fuzz.partial_ratio(str1, str2)
 
 # 5. Menggunakan Streamlit untuk Input dan Menampilkan Hasil
