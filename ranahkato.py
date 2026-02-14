@@ -23,11 +23,12 @@ except Exception as e:
 st.write("Sheet yang ada dalam file:")
 st.write(data.keys())  # Menampilkan semua sheet yang ada dalam file
 
-# 3. Menyiapkan Data dari Setiap Sheet
+# 3. Menyiapkan Data dari Setiap Sheet (Fokus pada 'Bentuk Kosakata', 'Transkripsi Fonemis', dan 'Kata')
 cleaned_data = {}
 for sheet_name, sheet_data in data.items():
     st.write(f"Memproses data dari sheet: {sheet_name}")  # Menampilkan nama sheet yang sedang diproses
     if 'Bentuk Kosakata' in sheet_data.columns and 'Transkripsi Fonemis' in sheet_data.columns and 'Kata' in sheet_data.columns:
+        # Hanya kolom yang relevan yang diambil dan dibersihkan
         cleaned_data[sheet_name] = sheet_data[['Bentuk Kosakata', 'Transkripsi Fonemis', 'Kata']].dropna()
     else:
         st.warning(f"Sheet '{sheet_name}' tidak memiliki kolom yang diperlukan.")
@@ -44,7 +45,12 @@ if user_input:
 
     # Mencocokkan kosakata pengguna dengan data yang ada pada setiap sheet
     for sheet_name, sheet_data in cleaned_data.items():
-        matched_words = sheet_data[sheet_data['Bentuk Kosakata'].apply(lambda x: match_strings(user_input, x) > 80)]
+        # Pencocokan dilakukan dalam urutan 'Bentuk Kosakata', 'Transkripsi Fonemis', dan 'Kata'
+        matched_words = sheet_data[
+            sheet_data['Bentuk Kosakata'].apply(lambda x: match_strings(user_input, x) > 80) |
+            sheet_data['Transkripsi Fonemis'].apply(lambda x: match_strings(user_input, x) > 80) |
+            sheet_data['Kata'].apply(lambda x: match_strings(user_input, x) > 80)
+        ]
         
         if not matched_words.empty:
             all_matches[sheet_name] = matched_words
