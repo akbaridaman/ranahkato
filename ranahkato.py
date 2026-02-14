@@ -3,7 +3,7 @@ from fuzzywuzzy import fuzz
 import streamlit as st
 
 # 1. Memuat Data Kosakata
-file_path = "https://raw.githubusercontent.com/username/repository/main/ranahkato.xlsx"  # Ganti dengan path yang sesuai
+file_path = "https://raw.githubusercontent.com/username/ranahkato/main/ranahkato.xlsx"  # Ganti dengan path yang sesuai
 data = pd.read_excel(file_path)
 
 # 2. Memilih Kolom yang Relevan dan Membersihkan Data
@@ -31,4 +31,5 @@ if user_input:
     else:
         st.write("Kosakata yang cocok dengan input:")
         st.write(matched_words)
+
 
