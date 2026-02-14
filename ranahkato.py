@@ -3,10 +3,10 @@ from rapidfuzz import fuzz
 import streamlit as st
 
 # Fungsi untuk mencocokkan string dengan ketepatan yang mendekati (case-insensitive)
-def match_strings(str1, str2):
+def match_strings(str1, str3):
     str1 = str1.strip().lower()  # Menghilangkan spasi dan mengubah menjadi huruf kecil
-    str2 = str2.strip().lower()
-    return fuzz.partial_ratio(str1, str2)
+    str3 = str3.strip().lower()
+    return fuzz.partial_ratio(str1, str3)
 
 # URL file Excel yang sudah dihosting di GitHub
 file_url = "https://raw.githubusercontent.com/akbaridaman/ranahkato/main/ranahkato.xlsx"
@@ -56,3 +56,4 @@ if user_input:
         for sheet_name, matched_words in all_matches.items():
             st.write(f"Kosakata yang cocok pada tabel '{sheet_name}':")
             st.write(matched_words)
+
